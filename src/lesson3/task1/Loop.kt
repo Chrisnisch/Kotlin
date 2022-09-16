@@ -75,7 +75,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var k = 0
-    var n2 = n
+    var n2 = abs(n)
     if (n == 0) return 1
     while (n2 > 0) {
         k += 1
@@ -91,8 +91,18 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
+    var f1 = 1
+    var f2 = 1
+    var fs = 0
+    var t = n
     if (n <= 2) return 1
-    return fib(n - 1) + fib(n - 2)
+    while (t - 2 > 0) {
+        fs = f1 + f2
+        f1 = f2
+        f2 = fs
+        t -= 1
+    }
+    return fs
 }
 
 /**
@@ -155,13 +165,17 @@ fun collatzSteps(x: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    var k = min(m, n)
-    while (true) {
-        if (k % m == 0 && k % n == 0) return k
-        else k += 1
+fun gcd(m: Int, n: Int): Int {
+    var a = m
+    var b = n
+    while (a * b != 0) {
+        if (a > b) a %= b
+        else b %= a
     }
+    return a + b
 }
+
+fun lcm(m: Int, n: Int): Int = abs(m * n) / gcd(m, n)
 
 /**
  * Средняя (3 балла)
@@ -170,15 +184,7 @@ fun lcm(m: Int, n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    val mS = mutableSetOf<Int>()
-    val nS = mutableSetOf<Int>()
-    for (i in 2..max(m, n) / 2) {
-        if (m % i == 0) mS.add(i)
-        if (n % i == 0) nS.add(i)
-    }
-    return nS.intersect(mS).isEmpty()
-}
+fun isCoPrime(m: Int, n: Int): Boolean = gcd(m, n) == 1
 
 /**
  * Средняя (3 балла)
@@ -239,7 +245,18 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+//    val p = 3
+//    var a = x - x.pow(p) / factorial(p)
+//    var sin = a
+//    while (true) {
+//        a = x.pow(p + 2) / factorial(p + 2) - x.pow(p + 4) / factorial(p + 4)
+//        sin += a
+//        if (abs(a) < eps) break
+//    }
+//    return sin
+    TODO()
+}
 
 /**
  * Средняя (4 балла)
