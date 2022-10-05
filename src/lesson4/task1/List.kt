@@ -121,24 +121,14 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double {
-    var abs = 0.0
-    for (el in v) {
-        abs += el * el
-    }
-    return sqrt(abs)
-}
+fun abs(v: List<Double>): Double = sqrt(v.sumOf { it * it })
 
 /**
  * Простая (2 балла)
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double {
-    return if (list.isNotEmpty()) {
-        list.sum() / list.size
-    } else 0.0
-}
+fun mean(list: List<Double>): Double = if (list.isNotEmpty()) list.sum() / list.size else 0.0
 
 /**
  * Средняя (3 балла)
@@ -150,12 +140,10 @@ fun mean(list: List<Double>): Double {
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
     val avg = mean(list)
-    return if (list.isNotEmpty()) {
-        for (i in 0 until list.size) {
-            list[i] -= avg
-        }
-        return list
-    } else list
+    for (i in 0 until list.size) {
+        list[i] -= avg
+    }
+    return list
 }
 
 /**
@@ -167,12 +155,12 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  */
 fun times(a: List<Int>, b: List<Int>): Int {
     var c = 0
-    return if (a.isNotEmpty() && b.isNotEmpty()) {
+    if (a.isNotEmpty() && b.isNotEmpty()) {
         for (i in a.indices) {
             c += a[i] * b[i]
         }
-        c
-    } else 0
+    }
+    return c
 }
 
 /**
@@ -185,12 +173,12 @@ fun times(a: List<Int>, b: List<Int>): Int {
  */
 fun polynom(p: List<Int>, x: Int): Int {
     var f = 0
-    return if (p.isNotEmpty()) {
+    if (p.isNotEmpty()) {
         for (i in p.indices) {
-            f += p[i] * x.toDouble().pow(i).toInt()
+            f += p[i] * x.toDouble().pow(i).toInt() // не знаю какую функцию использовать в этой задаче для упрощения
         }
-        f
-    } else 0
+    }
+    return f
 }
 
 /**
@@ -204,13 +192,13 @@ fun polynom(p: List<Int>, x: Int): Int {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-    val t = list.toMutableList()
-    return if (list.isNotEmpty()) {
-        for (i in 1 until t.size) {
-            list[i] = t.slice(0..i).sum()
-        }
-        list
-    } else list
+    var s = 0
+    for (i in 0 until list.size) {
+        val t = list[i]
+        list[i] += s
+        s += t
+    }
+    return list
 }
 
 /**
