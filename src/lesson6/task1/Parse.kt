@@ -1,11 +1,33 @@
 @file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
 
 package lesson6.task1
-
+import lesson2.task2.daysInMonth
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
 // Вместе с предыдущими уроками (пять лучших, 2-6) = 40/54
+
+fun valid(str: String): Boolean {
+    for (c in str) if (!c.isDigit()) return false
+    return str.isNotEmpty()
+}
+
+
+val months = listOf(
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря"
+)
+
 
 /**
  * Пример
@@ -74,7 +96,16 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    if (parts.size != 3) return ""
+    if (!valid(parts[0]) || !valid(parts[2])) return ""
+    val d = parts[0].toInt()
+    val m = months.indexOf(parts[1]) + 1
+    val y = parts[2].toInt()
+    if (m == 0 || daysInMonth(m, y) < d) return ""
+    return String.format("%02d.%02d.%d", d, m, y)
+}
 
 /**
  * Средняя (4 балла)
@@ -86,7 +117,17 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    if (parts.size != 3) return ""
+    for (part in parts) if (!valid(part)) return ""
+    val d = parts[0].toInt()
+    if (parts[1].toInt() !in 1..12) return ""
+    val m = months[parts[1].toInt() - 1]
+    val y = parts[2].toInt()
+    if (daysInMonth(parts[1].toInt(), y) < d) return ""
+    return String.format("%d %s %d", d, m, y)
+}
 
 /**
  * Средняя (4 балла)
@@ -127,7 +168,16 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    if (!jumps.contains("+")) return -1
+    val attempts = jumps.split(" ")
+    var max = -1
+    for (i in attempts.indices step 2) {
+        if (!valid(attempts[i])) return -1
+        if (attempts[i + 1].contains("+") && attempts[i].toInt() > max) max = attempts[i].toInt()
+    }
+    return max
+}
 
 /**
  * Сложная (6 баллов)
