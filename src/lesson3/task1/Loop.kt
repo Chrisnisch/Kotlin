@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import kotlin.math.*
 import kotlin.time.measureTime
 
@@ -215,7 +216,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = n == revert(n) // а так разрешается?
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя (3 балла)
@@ -277,7 +278,23 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var i = 1
+    var count = 0
+    while (true) {
+        count += digitNumber(sqr(i))
+        if (count >= n) {
+            break
+        }
+        i += 1
+    }
+    var t = sqr(i)
+    while (count > n) {
+        t /= 10
+        count--
+    }
+    return t % 10
+}
 
 /**
  * Сложная (5 баллов)
@@ -288,4 +305,20 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var i = 1
+    var count = 0
+    while (true) {
+        count += digitNumber(fib(i))
+        if (count >= n) {
+            break
+        }
+        i += 1
+    }
+    var t = fib(i)
+    while (count > n) {
+        t /= 10
+        count--
+    }
+    return t % 10
+}
