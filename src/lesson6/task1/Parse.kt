@@ -169,11 +169,10 @@ fun bestLongJump(jumps: String): Int = TODO()
  * вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    if (!jumps.contains("+")) return -1
+    if (!jumps.matches(Regex("""(\d+ [+%-]+\s?)+"""))) return -1
     val attempts = jumps.split(" ")
     var max = -1
     for (i in attempts.indices step 2) {
-        if (!valid(attempts[i])) return -1
         if (attempts[i + 1].contains("+") && attempts[i].toInt() > max) max = attempts[i].toInt()
     }
     return max
@@ -213,18 +212,14 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть больше нуля либо равны нулю.
  */
 fun mostExpensive(description: String): String {
-    val t = description.split("; ")
-    val goods = mutableListOf<List<String>>()
-    for (some in t) {
-        goods.add(some.split(" "))
-    }
     var max = -1.0
     var res = ""
     try {
-        for (some in goods) {
-            if (some[1].toDouble() > max) {
-                max = some[1].toDouble()
-                res = some[0]
+        for (some in description.split("; ")) {
+            val splitted = some.split(" ")
+            if (splitted[1].toDouble() > max) {
+                max = splitted[1].toDouble()
+                res = splitted[0]
             }
         }
     } catch (error: IndexOutOfBoundsException) {
