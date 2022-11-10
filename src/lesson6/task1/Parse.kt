@@ -98,8 +98,7 @@ fun main() {
  */
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
-    if (parts.size != 3) return ""
-    if (!valid(parts[0]) || !valid(parts[2])) return ""
+    if (!str.matches(Regex("""\d+\s[а-я]+\s\d+"""))) return ""
     val d = parts[0].toInt()
     val m = months.indexOf(parts[1]) + 1
     val y = parts[2].toInt()
@@ -119,8 +118,7 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
-    if (parts.size != 3) return ""
-    for (part in parts) if (!valid(part)) return ""
+    if (!digital.matches(Regex("""\d{2}\.\d{2}\.\d+"""))) return ""
     val d = parts[0].toInt()
     if (parts[1].toInt() !in 1..12) return ""
     val m = months[parts[1].toInt() - 1]
