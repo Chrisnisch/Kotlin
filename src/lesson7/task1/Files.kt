@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.util.regex.Pattern
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -86,14 +87,23 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO() /*{
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val fin = File(inputName).readText().lowercase()
     val res = mutableMapOf<String, Int>()
+//    for (sub in substrings) {
+//        val pattern = sub.lowercase()
+//        val matcher = Pattern.compile("""$pattern""").matcher(fin)
+//        var counter = 0
+//        while (matcher.find()) counter++
+//        res[sub] = counter
+//    }
     for (sub in substrings) {
-
+        res[sub] = containsStr(fin, sub.lowercase())
     }
     return res
-}*/
+}
+
+fun containsStr(str: String, sub: String) = str.windowed(sub.length) { if (it == sub) 1 else 0 }.sum()
 
 
 /**
