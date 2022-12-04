@@ -90,20 +90,17 @@ fun deleteMarked(inputName: String, outputName: String) {
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val fin = File(inputName).readText().lowercase()
     val res = mutableMapOf<String, Int>()
-//    for (sub in substrings) {
-//        val pattern = sub.lowercase()
-//        val matcher = Pattern.compile("""$pattern""").matcher(fin)
-//        var counter = 0
-//        while (matcher.find()) counter++
-//        res[sub] = counter
-//    }
-    for (sub in substrings) {
-        res[sub] = containsStr(fin, sub.lowercase())
+    for (sub in substrings) { // два варианта решения, сначала не смог с регексом, потом смог
+        val counter = "(?=\\$sub)".toRegex(RegexOption.IGNORE_CASE).findAll(fin).count()
+        res[sub] = counter
     }
+//    for (sub in substrings) {
+//        res[sub] = containsStr(fin, sub.lowercase())
+//    }
     return res
 }
 
-fun containsStr(str: String, sub: String) = str.windowed(sub.length) { if (it == sub) 1 else 0 }.sum()
+//fun containsStr(str: String, sub: String) = str.windowed(sub.length) { if (it == sub) 1 else 0 }.sum()
 
 
 /**
