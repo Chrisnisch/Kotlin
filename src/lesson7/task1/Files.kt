@@ -3,6 +3,8 @@
 package lesson7.task1
 
 import java.io.File
+import java.lang.Integer.max
+import java.lang.StringBuilder
 import java.util.regex.Pattern
 
 // Урок 7: работа с файлами
@@ -177,7 +179,38 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    val fin = File(inputName).readLines()
+    val fout = File(outputName).bufferedWriter()
+    val lines = mutableListOf<String>()
+    for (l in fin) {
+        lines.add(l.trim().replace(Regex("""\s+"""), " "))
+    }
+    val maxLength = lines.maxOfOrNull { it.trim().length }
+    if (maxLength != null) {
+        for (line in lines) {
+            if (line.isEmpty() || line == "\n") {
+                fout.write("\n")
+                continue
+            }
+            val splittedLine = line.trim().split(" ")
+            if (splittedLine.size == 1) {
+                fout.write(splittedLine[0] + "\n")
+                continue
+            }
+            val delta = max(0, maxLength - line.length)
+            val toOneSpace = delta / (splittedLine.size - 1)
+            var modSpaces = delta % (splittedLine.size - 1)
+            val resLine = StringBuilder()
+            for (word in splittedLine.subList(0, splittedLine.size - 1)) {
+                resLine.append(word).append(" ".repeat(toOneSpace + 1))
+                if (modSpaces > 0) resLine.append(" ")
+                modSpaces--
+            }
+            resLine.append(splittedLine.last())
+            fout.write(resLine.append("\n").toString())
+        }
+    }
+    fout.close()
 }
 
 /**
