@@ -3,7 +3,9 @@
 package lesson6.task1
 import lesson2.task2.daysInMonth
 import java.lang.IllegalArgumentException
+import java.lang.IllegalStateException
 import kotlin.math.exp
+import kotlin.math.min
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -300,3 +302,27 @@ fun fromRoman(roman: String): Int = TODO()
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+
+
+//fun cheapestPetrol(carPetrols: Map<String, String>, gasStations: String): Map<String, String> {
+//    val result = mutableMapOf<String, String>()
+//    val splittedStations = gasStations.split("; ")
+//    if (!gasStations.matches(Regex("""^(\D*\S*\D*\s*\d*.\d*)*"""))) throw IllegalArgumentException()
+//    var minPrice = 1000.00
+//    for ((auto, petrol) in carPetrols) {
+//        for (station in splittedStations) {
+//            if (petrol in station) {
+//                val stationT = station.replace(petrol, "$")
+//                val i = stationT.indexOf("$")
+//                val price = stationT.slice(i + 1..i + 8).replace(" - ", "")
+//                if (minPrice > price.toDouble()) {
+//                    minPrice = price.toDouble()
+//                    val t = station.indexOf(":") - 1
+//                    result[auto] = station.slice(0..t)
+//                }
+//            }
+//        }
+//        if (result[auto].isNullOrEmpty()) throw IllegalStateException()
+//    }
+//    return result
+//}

@@ -151,4 +151,21 @@ class Tests {
         assertThrows(IllegalArgumentException::class.java) { computeDeviceCells(10, "+>+>[+>", 3) }
         assertThrows(IllegalStateException::class.java) { computeDeviceCells(20, ">>>>>>>>>>>>>", 12) }
     }
+
+//    @Test
+//    fun cheapestPatrol() {
+//        assertEquals(mapOf("Lada Vesta" to "Газпром", "BMW M5" to "Лукойл", "Копейка" to "Газпром",
+//                "Трактор" to "Лукойл"), cheapestPetrol(mapOf("Lada Vesta" to "бензин 98", "BMW M5" to "бензин 95",
+//                    "Копейка" to "бензин 88",
+//                    "Трактор" to "солярка"), "Лукойл: бензин 95 - 44.66, солярка - 10.00; Газпром: бензин 98 - 50.00, " +
+//                        "бензин 88 - 34.30; Shell: бензин 66 - 23.00;"))
+//        assertThrows(IllegalStateException::class.java) { cheapestPetrol(mapOf("Lada Vesta" to "бензин 93", "Lada Niva" to "дизель", "BMW M5" to "бензин 95",
+//            "Копейка" to "бензин 98",
+//            "Трактор" to "солярка"), "Лукойл: бензин 95 - 44.66, дизель - 60.76, солярка - 10.00; Газпром: бензин 98 - 50.00, " +
+//                "бензин 88 - 34.30; Shell: бензин 66 - 23.00, дизель - 55.50;")}
+//        assertThrows(IllegalStateException::class.java) { cheapestPetrol(mapOf("Lada Vesta" to "бензин 93", "Lada Niva" to "дизель", "BMW M5" to "бензин 95",
+//            "Копейка" to "бензин 98",
+//            "Трактор" to "солярка"), "Лукойл: бензин 95 - , дизель - 60.76, солярка - 10.00; Газпром: бензин 98 - 50.00, " +
+//                "бензин 88 - 34.30; Shell: бензин 66 - 23.00, дизель - 55.50;")}
+//    }
 }

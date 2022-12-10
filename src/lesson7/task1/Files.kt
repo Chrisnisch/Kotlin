@@ -181,23 +181,24 @@ fun centerFile(inputName: String, outputName: String) {
 fun alignFileByWidth(inputName: String, outputName: String) {
     val fin = File(inputName).readLines()
     val fout = File(outputName).bufferedWriter()
-    val lines = mutableListOf<String>()
-    for (l in fin) {
-        lines.add(l.trim().replace(Regex("""\s+"""), " "))
-    }
-    val maxLength = lines.maxOfOrNull { it.trim().length }
+//    val lines = mutableListOf<String>()
+//    for (l in fin) {
+//        lines.add(l.trim().replace(Regex("""\s+"""), " "))
+//    }
+    val maxLength = fin.maxOfOrNull { it.trim().replace(Regex("""\s+"""), " ").length }
     if (maxLength != null) {
-        for (line in lines) {
+        for (line in fin) {
             if (line.isEmpty() || line == "\n") {
                 fout.write("\n")
                 continue
             }
-            val splittedLine = line.trim().split(" ")
+            val t = line.trim().replace(Regex("""\s+"""), " ")
+            val splittedLine = t.trim().split(" ")
             if (splittedLine.size == 1) {
                 fout.write(splittedLine[0] + "\n")
                 continue
             }
-            val delta = max(0, maxLength - line.length)
+            val delta = max(0, maxLength - t.length)
             val toOneSpace = delta / (splittedLine.size - 1)
             var modSpaces = delta % (splittedLine.size - 1)
             val resLine = StringBuilder()
